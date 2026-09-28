@@ -35,3 +35,6 @@ jobs:
         with:
           name: HelloWorld
           path: HelloWorld.zip
+    
+      - name: Build Docker image
+        run: docker build -t helloworld:latest ./HelloWorld
