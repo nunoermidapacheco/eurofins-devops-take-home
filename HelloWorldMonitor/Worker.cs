@@ -25,6 +25,7 @@ public class Worker : BackgroundService
             }
 
             File.AppendAllText(logFile, $"{DateTime.Now} | {code} | {message}{Environment.NewLine}");
+            Console.WriteLine($"{DateTime.Now} | {code} | {message}");
 
             if (code != 200)
             {
