@@ -38,3 +38,9 @@ jobs:
     
       - name: Build Docker image
         run: docker build -t helloworld:latest ./HelloWorld
+      
+      - name: Run Docker container
+        run: docker run -d -p 8080:8080 --name helloworld helloworld:latest
+
+      - name: Test Docker container
+        run: curl http://localhost:8080
