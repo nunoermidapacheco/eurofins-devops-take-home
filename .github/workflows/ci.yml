@@ -42,7 +42,4 @@ jobs:
       - name: Test Docker container
         run: |
           docker run -d -p 8080:8080 --name helloworld helloworld:latest
-          sleep 5
-          docker ps -a
-          docker logs helloworld
-          curl -v http://localhost:8080
+          curl --retry 5 --retry-connrefused --retry-delay 1 -s http://localhost:8080
