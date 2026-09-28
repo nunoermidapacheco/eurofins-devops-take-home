@@ -50,3 +50,9 @@ jobs:
         with:
           username: nunopacheco
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag Docker image
+        run: docker tag helloworld:latest nunopacheco/helloworld:latest
+        
+      - name: Push Docker image
+        run: docker push nunopacheco/helloworld:latest
