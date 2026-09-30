@@ -49,7 +49,7 @@ A small end-to-end delivery pipeline for a .NET web application: build and packa
 
 ## Architecture
 
-See [docs/architecture.md](docs/architecture.md) for the project architecture.
+See [architecture.md](architecture.md) for the project architecture.
 
 ## Quick start
 
@@ -275,7 +275,7 @@ docker logs helloworld
 
 ## Troubleshooting
 
-Common problems, their likely causes and the locations of the logs are listed in [docs/troubleshooting.md](docs/troubleshooting.md).
+Common problems, their likely causes and the locations of the logs are listed in [troubleshooting.md](troubleshooting.md)
 
 ## Known limitations
 
