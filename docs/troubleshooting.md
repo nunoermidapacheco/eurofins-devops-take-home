@@ -19,12 +19,13 @@ Common problems and where to look first. Most of them come from a missing prereq
 | Monitor stopped and did not come back | Recovery not configured, or the 300 seconds have not passed yet | `sc.exe qfailure HelloWorldMonitor` |
 | Docker reports `address already in use` | Something else is using port `9090` | Stop it, or change the host port in the script |
 | Docker pull fails | No internet access, or Docker is not running | `docker info` and check the connection |
+| IIS returns `HTTP 500.35` on the site root | ASP.NET Core does not allow two apps in the same application pool | Use `/HelloWorld/` in the URL. The site root is not used |
 
 ## Where the logs are
 
 | What | Location |
 |---|---|
-| IIS request logs | `C:\Eurofins\IISLogs` |
+| IIS request logs | `C:\Eurofins\IISLogs` inside a W3SVC subfolder | 
 | Monitor status log | `C:\Eurofins\HelloWorldMonitor\status.log` |
 | Application errors on IIS | Windows *Event Viewer > Windows Logs > Application* |
 | Container output | `docker logs helloworld` |
