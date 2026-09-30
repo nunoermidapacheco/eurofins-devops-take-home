@@ -4,6 +4,8 @@
 
 A small end-to-end delivery pipeline for a .NET web application: build and package with CI, deploy to IIS on Windows, monitor with a Windows service, and optionally run as a Docker container.
 
+The Windows-specific components were developed and tested in a Windows VM using UTM on macOS.
+
 ## Documentation
 
 - [Architecture](architecture.md) — project architecture and component flow
