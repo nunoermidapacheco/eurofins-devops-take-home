@@ -121,7 +121,7 @@ The application answers at:
 - `http://localhost:8080/HelloWorld/`
 - `https://localhost/HelloWorld/` (the browser warns about the self-signed certificate)
 
-The site root (`http://localhost:8080/` and `https://localhost/`) is not used. It returns `HTTP 500.35`, because ASP.NET Core does not allow two apps in the same pool and the root points to the same folder as the application.
+The site root (`http://localhost:8080/` and `https://localhost/`) is not used. It returns `HTTP 500.35` ("ASP.NET Core does not support multiple apps in the same app pool"). The application is served from `/HelloWorld/`.
 
 ## Step 3: HelloWorldMonitor
 
@@ -136,7 +136,7 @@ The site root (`http://localhost:8080/` and `https://localhost/`) is not used. I
 Each log line has the format `date | status code | message`:
 
 ```
-29/09/2026 12:30:00 | 200 | OK
+9/29/2026 6:57:29 PM | 200 | OK
 ```
 
 If the site cannot be reached at all (for example IIS is stopped), the line shows code `0` with the error message, and the service stops as well.
@@ -209,20 +209,18 @@ Get-Content C:\Eurofins\HelloWorldMonitor\status.log -Tail 5
 
 ### Testing the recovery
 
-Use two PowerShell windows (both as administrator): one to watch the log, one to run commands.
+The Windows Service recovery was tested by temporarily configuring a 10-second recovery delay instead of the required 300 seconds.
 
-**Terminal 1:** follow the log live (press `Ctrl+C` to stop watching):
+The test verifies that:
 
-```powershell
-Get-Content C:\Eurofins\HelloWorldMonitor\status.log -Tail 5 -Wait
-```
+- The monitor detects an IIS failure and exits.
+- Windows changes the service state to `Stopped`.
+- IIS is restored before the recovery delay expires.
+- The `HelloWorldMonitor` service remains `Stopped` until the recovery delay expires.
+- Windows restarts the service automatically.
+- The monitor keeps checking the site and logs `200 | OK`.
 
-**Terminal 2:** run the test:
-
-1. Stop the IIS site: `Stop-Website -Name HelloWorld`
-2. Within 60 seconds, Terminal 1 shows a failed check (code `0` or not `200`) and the service stops. Confirm with `Get-Service HelloWorldMonitor`, which shows `Stopped`.
-3. Start the site again before the 300 seconds are over: `Start-Website -Name HelloWorld`
-4. Windows restarts the service after 300 seconds. `Get-Service HelloWorldMonitor` shows `Running` again, and Terminal 1 shows a new line with `200`.
+The complete test procedure, commands and screenshots are documented in [recovery-test.md](recovery-test.md).
 
 ## Steps 5 and 6: Docker
 
@@ -275,7 +273,7 @@ docker logs helloworld
 
 ## Troubleshooting
 
-Common problems, their likely causes and the locations of the logs are listed in [troubleshooting.md](troubleshooting.md)
+Common problems, their likely causes and the locations of the logs are listed in [troubleshooting.md](troubleshooting.md).
 
 ## Known limitations
 
