@@ -2,7 +2,7 @@
 
 Common problems and where to look first. Most of them come from a missing prerequisite rather than from the scripts themselves.
 
-[← Back to the README](README.md)
+[← Back to README](README.md)
 
 ## Common problems
 

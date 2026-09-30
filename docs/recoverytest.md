@@ -1,6 +1,6 @@
 # Recovery test
 
-[← Back to the README](README.md)
+[← Back to README](README.md)
 
 ## Purpose
 

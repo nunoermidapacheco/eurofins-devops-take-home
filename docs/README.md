@@ -4,19 +4,23 @@
 
 A small end-to-end delivery pipeline for a .NET web application: build and package with CI, deploy to IIS on Windows, monitor with a Windows service, and optionally run as a Docker container.
 
+## Documentation
+
+- [Architecture](architecture.md) — project architecture and component flow
+- [Troubleshooting](troubleshooting.md) — common problems, causes and solutions
+- [Recovery Test](recoverytest.md) — detailed Windows Service recovery test, commands, timestamps and screenshots
+
 ## Contents
 
 - [Overview](#overview)
 - [Requirements](#requirements)
 - [Where to find each step](#where-to-find-each-step)
-- [Architecture](#architecture)
 - [Quick start](#quick-start)
 - [Step 1: Build and CI](#step-1-build-and-ci)
 - [Step 2: IIS deployment](#step-2-iis-deployment)
 - [Step 3: HelloWorldMonitor](#step-3-helloworldmonitor)
 - [Step 4: Windows service deployment](#step-4-windows-service-deployment)
 - [Steps 5 and 6: Docker](#steps-5-and-6-docker)
-- [Troubleshooting](#troubleshooting)
 - [Known limitations](#known-limitations)
 
 ## Overview
@@ -46,10 +50,6 @@ A small end-to-end delivery pipeline for a .NET web application: build and packa
 | 4. Service deployment | Install script (auto-start, run as user, recovery) | `scripts/Install-HelloWorldMonitor.ps1` |
 | 5. Docker image | Dockerfile and CI push to Docker Hub | `HelloWorld/Dockerfile`, `.github/workflows/ci.yml` |
 | 6. Docker deployment | Pull and run the container | `scripts/Deploy-HelloWorld-Docker.ps1` |
-
-## Architecture
-
-See [architecture.md](architecture.md) for the project architecture.
 
 ## Quick start
 
@@ -136,7 +136,7 @@ The site root (`http://localhost:8080/` and `https://localhost/`) is not used. I
 Each log line has the format `date | status code | message`:
 
 ```
-9/29/2026 6:57:29 PM | 200 | OK
+29/09/2026 12:30:00 | 200 | OK
 ```
 
 If the site cannot be reached at all (for example IIS is stopped), the line shows code `0` with the error message, and the service stops as well.
@@ -220,7 +220,9 @@ The test verifies that:
 - Windows restarts the service automatically.
 - The monitor keeps checking the site and logs `200 | OK`.
 
-The complete test procedure, commands and screenshots are documented in [recovery-test.md](recovery-test.md).
+The complete test procedure, commands, timestamps and screenshots are documented in:
+
+**[Recovery Test](recoverytest.md)**
 
 ## Steps 5 and 6: Docker
 
@@ -242,7 +244,7 @@ The container listens on port `8080` internally (`ASPNETCORE_HTTP_PORTS=8080`). 
 - Docker installed and running (Docker Desktop or Docker Engine)
 - Docker set to run **Linux containers** (the default in Docker Desktop)
 - Internet access to Docker Hub, to pull the image
-
+a
 ### Running it
 
 ```powershell
@@ -270,10 +272,6 @@ docker logs helloworld
 - `docker logs` shows the application output
 
 > **Ports:** the container is published on host port `9090` so it doesn't clash with the IIS site on `8080`. Both can run on the same machine at the same time.
-
-## Troubleshooting
-
-Common problems, their likely causes and the locations of the logs are listed in [troubleshooting.md](troubleshooting.md).
 
 ## Known limitations
 

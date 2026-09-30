@@ -1,6 +1,6 @@
 # Architecture
 
-[← Back to the README](./README.md)
+[← Back to README](./README.md)
 
 ![Architecture](images/architecture.png)
 
